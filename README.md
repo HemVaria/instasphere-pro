@@ -32,7 +32,7 @@ A modern social app built with Next.js App Router, TypeScript, Tailwind CSS, and
 ### 2) Clone and install
 
 \`\`\`bash
-git clone https://github.com/your-org/instasphere-pro.git
+git clone [https://github.com/your-org/instasphere-pro.git]
 cd instasphere-pro
 pnpm install
 \`\`\`
