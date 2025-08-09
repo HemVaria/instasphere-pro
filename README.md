@@ -1,4 +1,4 @@
-# Instasphere (Fork)
+# Instasphere
 
 A modern social app built with Next.js App Router, TypeScript, Tailwind CSS, and shadcn/ui — backed by Supabase (Auth, Postgres, Storage). Includes a real‑time-ish feed, channels, notifications, and image uploads for posts.
 
