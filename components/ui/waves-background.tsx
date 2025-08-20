@@ -322,3 +322,6 @@ export function Waves({
     </div>
   )
 }
+
+// Add this export at the end of the file
+export { Waves as WavesBackground }

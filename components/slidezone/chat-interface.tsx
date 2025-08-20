@@ -1,37 +1,37 @@
 "use client"
 
 import type React from "react"
-import { useState, useEffect, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import {
-  Settings,
-  Smile,
+  MessageSquare,
+  Users,
   Hash,
+  Send,
+  Smile,
   Plus,
   Search,
-  MoreHorizontal,
-  MessageCircle,
+  Settings,
   Home,
-  Bell,
   Compass,
-  Send,
-  Lock,
   Trash2,
-  Users,
-  Rss,
   AlertTriangle,
+  Bell,
+  MoreHorizontal,
+  Lock,
+  Rss,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { useAuth } from "@/hooks/use-auth"
+import { cn } from "@/lib/utils"
 import { useChat } from "@/hooks/use-chat"
 import { useChannels } from "@/hooks/use-channels"
+import { useAuth } from "@/hooks/use-auth"
+import { useNotifications } from "@/hooks/use-notifications"
 import { CreateChannelModal } from "./create-channel-modal"
-import { cn } from "@/lib/utils"
 import { EmojiPicker } from "./emoji-picker"
 import { NotificationsPanel } from "./notifications-panel"
-import { useNotifications } from "@/hooks/use-notifications"
 
 interface Message {
   id: string
@@ -48,17 +48,20 @@ interface SlideZoneProps {
   onNavigateToFeed: () => void
 }
 
+type MobileView = "channels" | "chat" | "users"
+
 export function SlideZone({ onNavigateToExplore, onNavigateToSettings, onNavigateToFeed }: SlideZoneProps) {
   const { user, signOut } = useAuth()
   const { messages, users, sendMessage, isConnected, deleteMessage, activeChannel, setActiveChannel } = useChat()
   const { channels, createChannel, deleteChannel, loading: channelsLoading } = useChannels()
   const [newMessage, setNewMessage] = useState("")
   const [searchQuery, setSearchQuery] = useState("")
+  const [sidebarExpanded, setSidebarExpanded] = useState(false)
   const [showCreateChannel, setShowCreateChannel] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
   const [showNotifications, setShowNotifications] = useState(false)
-  const [mobileView, setMobileView] = useState<"channels" | "chat" | "users">("chat")
+  const [mobileView, setMobileView] = useState<MobileView>("chat")
   const [isMobile, setIsMobile] = useState(false)
   const [showClearChatModal, setShowClearChatModal] = useState(false)
   const { unreadCount } = useNotifications()
@@ -117,7 +120,7 @@ export function SlideZone({ onNavigateToExplore, onNavigateToSettings, onNavigat
       onClick: () => setShowNotifications(true),
       badge: unreadCount > 0 ? unreadCount : undefined,
     },
-    { icon: MessageCircle, label: "Messages", active: false },
+    { icon: MessageSquare, label: "Messages", active: false },
     { icon: Rss, label: "Feed", active: false, onClick: onNavigateToFeed },
     { icon: Compass, label: "Explore", active: false, onClick: onNavigateToExplore },
   ]
@@ -261,7 +264,7 @@ export function SlideZone({ onNavigateToExplore, onNavigateToSettings, onNavigat
                 : "text-muted-foreground hover:text-foreground hover:bg-accent",
             )}
           >
-            <MessageCircle className="h-4 w-4" />
+            <MessageSquare className="h-4 w-4" />
             <span className="text-sm font-medium">Chat</span>
           </button>
           <button
@@ -616,7 +619,7 @@ export function SlideZone({ onNavigateToExplore, onNavigateToSettings, onNavigat
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <MessageCircle className="h-5 w-5 text-primary-foreground" />
+              <MessageSquare className="h-5 w-5 text-primary-foreground" />
             </div>
             <h1 className="text-xl font-bold text-foreground">Instasphere</h1>
           </div>
