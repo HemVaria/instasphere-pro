@@ -146,7 +146,7 @@ export function ChannelsProvider({ children }: { children: React.ReactNode }) {
           name: cleanName,
           description,
           is_private: false,
-          created_by: user.id,
+          created_by: user.id, // This will now work as TEXT
         })
         .select()
         .single()
