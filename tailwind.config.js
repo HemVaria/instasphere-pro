@@ -71,11 +71,19 @@ module.exports = {
           "0%, 100%": { opacity: 0.4 },
           "50%": { opacity: 0.7 },
         },
+        glow: {
+          "0%, 100%": { boxShadow: "0 0 20px rgba(251, 146, 60, 0.3)" },
+          "50%": { boxShadow: "0 0 40px rgba(251, 146, 60, 0.6)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "wave-pulse": "wave-pulse 4s ease-in-out infinite",
+        glow: "glow 2s ease-in-out infinite alternate",
+      },
+      fontFamily: {
+        sans: ["Inter", "system-ui", "sans-serif"],
       },
     },
   },

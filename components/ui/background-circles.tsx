@@ -166,7 +166,7 @@ const AnimatedGrid = () => (
 export function BackgroundCircles({
   title = "Instasphere",
   className,
-  variant = "octonary",
+  variant = "primary",
   onSignInClick,
 }: BackgroundCirclesProps) {
   const variantStyles = COLOR_VARIANTS[variant]
