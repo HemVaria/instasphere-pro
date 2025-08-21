@@ -181,14 +181,8 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
             }
           })
 
-        // Load initial messages and update presence (with error handling)
-        await Promise.all([
-          loadMessagesForChannel(activeChannel),
-          updateUserPresence().catch((err) => {
-            console.warn("Failed to update user presence:", err)
-            // Don't throw error, just log it
-          }),
-        ])
+        // Load initial messages and update presence
+        await Promise.all([loadMessagesForChannel(activeChannel), updateUserPresence()])
       } catch (err: any) {
         if (!mounted) return
         console.error("Failed to setup real-time subscriptions:", err)
@@ -256,29 +250,18 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     try {
       const supabase = createClient()
 
-      // Use upsert with conflict resolution
-      const { error } = await supabase.from("user_presence").upsert(
-        {
-          user_id: user.id,
-          last_seen: new Date().toISOString(),
-          is_online: true,
-          status: "online",
-        },
-        {
-          onConflict: "user_id",
-          ignoreDuplicates: false,
-        },
-      )
+      const { error } = await supabase.from("user_presence").upsert({
+        user_id: user.id,
+        last_seen: new Date().toISOString(),
+        is_online: true,
+        status: "online",
+      })
 
-      if (error) {
-        // Only log errors that aren't about missing tables
-        if (!error.message.includes("does not exist") && !error.message.includes("relation")) {
-          console.warn("Error updating presence:", error)
-        }
+      if (error && !error.message.includes("does not exist")) {
+        console.error("Error updating presence:", error)
       }
     } catch (err: any) {
-      console.warn("Network error updating presence:", err)
-      // Don't throw error, just log it
+      console.error("Network error updating presence:", err)
     }
   }
 

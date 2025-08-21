@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useEffect } from "react"
-import { motion } from "framer-motion"
+import { cn } from "@/lib/utils"
 
 interface WavesProps {
   /**
@@ -309,50 +309,16 @@ export function Waves({
       style={{
         backgroundColor,
       }}
-      className={`absolute top-0 left-0 w-full h-full overflow-hidden ${className}`}
+      className={cn("absolute top-0 left-0 w-full h-full overflow-hidden", className)}
     >
       <div
-        className="absolute top-0 left-0 rounded-full w-2 h-2 bg-foreground/10"
+        className={cn("absolute top-0 left-0 rounded-full", "w-2 h-2 bg-foreground/10")}
         style={{
           transform: "translate3d(calc(var(--x) - 50%), calc(var(--y) - 50%), 0)",
           willChange: "transform",
         }}
       />
       <canvas ref={canvasRef} className="block w-full h-full" />
-      <svg className="absolute bottom-0 left-0 w-full h-64" viewBox="0 0 1200 320" preserveAspectRatio="none">
-        <motion.path
-          d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,149.3C960,160,1056,160,1152,138.7C1248,117,1344,75,1392,53.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-          fill="url(#waveGradient1)"
-          initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: 1 }}
-          transition={{ duration: 2, ease: "easeInOut" }}
-        />
-        <defs>
-          <linearGradient id="waveGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#10b981" stopOpacity="0.3" />
-            <stop offset="50%" stopColor="#14b8a6" stopOpacity="0.2" />
-            <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.1" />
-          </linearGradient>
-          <linearGradient id="waveGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#059669" stopOpacity="0.2" />
-            <stop offset="50%" stopColor="#0d9488" stopOpacity="0.15" />
-            <stop offset="100%" stopColor="#0891b2" stopOpacity="0.1" />
-          </linearGradient>
-        </defs>
-      </svg>
-
-      <svg className="absolute bottom-0 left-0 w-full h-48" viewBox="0 0 1200 320" preserveAspectRatio="none">
-        <motion.path
-          d="M0,200 C300,140 600,260 900,200 C1050,160 1200,220 1200,220 L1200,320 L0,320 Z"
-          fill="url(#waveGradient2)"
-          initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: 1 }}
-          transition={{ duration: 2.5, delay: 0.5, ease: "easeInOut" }}
-        />
-      </svg>
     </div>
   )
 }
-
-// Export alias for backward compatibility
-export const WavesBackground = Waves
